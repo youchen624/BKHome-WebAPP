@@ -1,0 +1,13 @@
+#
+.env
+.env.local
+
+# TypeScript JavaScript
+node_modules/
+dist/
+
+# Data
+data/
+
+*.log
+.DS_Store

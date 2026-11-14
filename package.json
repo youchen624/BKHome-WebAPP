@@ -1,0 +1,34 @@
+{
+  "name": "bkhome-webapp",
+  "version": "0.1.0",
+  "description": "A web APP for multiple functions.",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc --build && npm run build -w apps/web",
+    "start": "node apps/api/dist/server.js",
+    "dev:api": "tsx --env-file=.env watch apps/api/src/server.ts",
+    "dev:web": "vite --root apps/web"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/youchen624/BKHome-WebAPP.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/youchen624/BKHome-WebAPP/issues"
+  },
+  "homepage": "https://github.com/youchen624/BKHome-WebAPP#readme",
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ]
+}

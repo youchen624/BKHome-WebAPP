@@ -1,0 +1,22 @@
+services:
+  bkhome-app:
+    image: bkhome:latest       # Using built Image by CMD docker load
+    container_name: bkhome-app
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    # environment:
+      # DATABASE_URL: "postgresql://bkadmin:secretpassword@bkhome-db:5432/bkhome"
+    # depends_on:
+      # - bkhome-db
+
+  # bkhome-db:
+  #   image: postgres:16-alpine
+  #   container_name: bkhome-db
+  #   restart: unless-stopped
+  #   environment:
+  #     POSTGRES_USER: bkadmin
+  #     POSTGRES_PASSWORD: secretpassword
+  #     POSTGRES_DB: bkhome
+  #   volumes:
+  #     - ./data/postgres:/var/lib/postgresql/data
