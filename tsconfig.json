@@ -1,8 +1,8 @@
 {
   "files": [],
   "references": [
-    { "path": "./packages/core"},
-    { "path": "./apps/api"},
-    { "path": "./apps/web"}
+    { "path": "./packages/core" },
+    { "path": "./apps/api" }
+    // { "path": "./apps/web"}  // handle by Vite
   ]
 }

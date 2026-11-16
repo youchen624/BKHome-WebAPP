@@ -1,13 +1,19 @@
 #
 .env
 .env.local
+*.code-workspace
 
 # TypeScript JavaScript
 node_modules/
 dist/
+*.tsbuildinfo
+
+# Docker
+bkhome.tar
 
 # Data
 data/
 
+# OS
 *.log
 .DS_Store

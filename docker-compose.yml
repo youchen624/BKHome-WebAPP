@@ -1,22 +1,35 @@
 services:
   bkhome-app:
-    image: bkhome:latest       # Using built Image by CMD docker load
+    image: bkhome:latest
     container_name: bkhome-app
     restart: unless-stopped
     ports:
-      - "3000:3000"
-    # environment:
-      # DATABASE_URL: "postgresql://bkadmin:secretpassword@bkhome-db:5432/bkhome"
-    # depends_on:
-      # - bkhome-db
+      - "${APP_PORT:-3000}:3000"
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - DB_HOST=bkhome-db
+      - DB_PORT=5432
+      - DATABASE_URL=postgresql://${DB_USER:-bkhome}:${DB_PASSWORD}@bkhome-db:5432/${DB_NAME:-bkhome_db}
+    depends_on:
+      bkhome-db:
+        condition: service_healthy
 
-  # bkhome-db:
-  #   image: postgres:16-alpine
-  #   container_name: bkhome-db
-  #   restart: unless-stopped
-  #   environment:
-  #     POSTGRES_USER: bkadmin
-  #     POSTGRES_PASSWORD: secretpassword
-  #     POSTGRES_DB: bkhome
-  #   volumes:
-  #     - ./data/postgres:/var/lib/postgresql/data
+  bkhome-db:
+    image: postgres:16-alpine
+    container_name: bkhome-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${DB_USER:-bkhome}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME:-bkhome_db}
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${DB_USER:-bkhome} -d ${DB_NAME:-bkhome_db}" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10

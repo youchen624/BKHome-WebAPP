@@ -43,4 +43,10 @@ COPY --from=builder /app/apps/web/dist ./apps/web/dist
 USER node
 
 EXPOSE 3000
-CMD ["npm", "start"]
+CMD ["node", "apps/api/dist/server.js"]
+# CMD ["npm", "start"]
+
+# Health Check
+# HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+#   CMD node -e "fetch('http://localhost:3000/health').then(r => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))"
+

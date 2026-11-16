@@ -5,6 +5,12 @@ node_modules
 **/node_modules
 dist
 **/dist
+*.tsbuildinfo
+
+# Docker
+bkhome.tar
+
 data
+
 Dockerfile
 docker-compose.yml

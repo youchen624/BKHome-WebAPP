@@ -12,3 +12,7 @@
 - [ ] Message Chat
 - [ ] News
 - [ ] Multi-Window
+
+## WHAT SHOULD DO
+
+- [ ] Argon2 PWD saving in 'password.ts'

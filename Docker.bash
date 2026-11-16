@@ -17,6 +17,9 @@ docker compose up -d
 # 4. re-load
 docker load -i bkhome.tar
 # 5. rebuild Container
-docker compose up -d
+docker compose up -d --force-recreate bkhome-app
+# docker compose up -d
 # 6. clean old Image files (for disk)
 docker image prune -f
+# Option
+rm -f bkhome.tar
