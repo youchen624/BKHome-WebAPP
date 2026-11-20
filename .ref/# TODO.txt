@@ -1,0 +1,50 @@
+# TODO
+
+at db.ts begin
+-> User Login sv
+-> auth
+
+3. 實作 RESTful auth 模組的三個核心檔案
+接下來在 apps/api/src/ 依序建立以下三支檔案即可完成整套驗證閉環：
+
+modules/auth/auth.repository.ts（資料存取層）：
+
+hasAnyUser()：檢查 users 表是否為空，決定當前註冊是否走「創始 Root 使用者」路徑。
+
+registerRootUser(...) 與 registerInvitedUser(...)：後者使用 withTransaction 並以 SELECT ... FROM invitations WHERE token = $1 FOR UPDATE 鎖定邀請碼，防止同一組邀請碼被並發搶註。
+
+findActiveUserByEmail(email)：登入驗證用（記得加上 WHERE deleted_at IS NULL 配合你的軟刪除索引）。
+
+createSession(userId, tokenHash, expiresAt) / findValidSession(tokenHash) / deleteSession(tokenHash)：管理資料庫 Session。
+
+shared/middleware/auth.middleware.ts（驗證攔截器）：
+
+從 req.cookies.bkhome_session 取出 Raw Token 
+→
+→ 計算 SHA-256 
+→
+→ 查詢 sessions JOIN users（確認未過期且 deleted_at IS NULL）
+→
+→ 將使用者資訊掛載到 req.user。
+
+modules/auth/auth.route.ts（HTTP 端點）：
+
+POST /api/auth/register：驗證 Zod 
+→
+→ Argon2id 雜湊密碼 
+→
+→ 寫入 DB 
+→
+→ 自動建立 Session 並設定 HttpOnly Cookie（註冊完直接登入）。
+
+POST /api/auth/login：比對 Argon2id 密碼 
+→
+→ 簽發 HttpOnly Cookie。
+
+POST /api/auth/logout：刪除資料庫該筆 token_hash 並 res.clearCookie('bkhome_session')。
+
+GET /api/auth/me：掛載 requireAuth middleware，回傳 PublicUser。
+
+你可以先更新 db.ts 與 auth.schema.ts，並在 server.ts 啟動時呼叫 verifyDbConnection() 測試與 bkhome-db 容器的連線（記得本機 DEV 模式下要在 .env 設定 DATABASE_URL=postgresql://bkhome:你的密碼@localhost:5432/bkhome_db，並暫時把 docker-compose.yml 的 bkhome-db 開啟 ports: - "5432:5432" 方便本機開發連入）。
+
+需要我直接幫你把 auth.repository.ts、auth.route.ts 與 auth.middleware.ts 的完整程式碼寫出來嗎？
