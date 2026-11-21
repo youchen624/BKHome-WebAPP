@@ -1,0 +1,53 @@
+/* default */
+:root {
+  --bg-primary: #ffffff;
+  --bg-card: #f8f9fa;
+  --text-primary: #1a1a1a;
+  --text-secondary: #555555;
+  --border-color: #e0e0e0;
+}
+
+/* data-theme="dark" */
+[data-theme="dark"] {
+  --bg-primary: #121212;
+  --bg-card: #1e1e1e;
+  --text-primary: #f5f5f5;
+  --text-secondary: #a0a0a0;
+  --border-color: #333333;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease;
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+a.a-button {
+  border: 1px solid;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+button {
+  cursor: pointer;
+}
+
+.mb12px {
+  margin-bottom: 12px;
+}
+
+.mb10px {
+  margin-bottom: 10px;
+}
+

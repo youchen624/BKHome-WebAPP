@@ -1,4 +1,8 @@
 import { useEffect, useState } from "react";
+import { BrowserRouter, Routes, Route, useSearchParams } from "react-router";
+import { LoginForm } from "./features/auth/LoginForm";
+import { RegisterForm } from "./features/auth/RegisterForm";
+import logoPNG from "./assets/BKHome-128.png";
 
 interface HealthResponse {
   status: string;
@@ -6,7 +10,7 @@ interface HealthResponse {
   timestamp: string;
 }
 
-export default function App() {
+function HomePage() {
   const [health, setHealth] = useState<HealthResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -24,7 +28,6 @@ export default function App() {
   useEffect(() => {
     checkHealth();
   }, []);
-
   return (
     <div
       style={{
@@ -35,8 +38,6 @@ export default function App() {
       }}
     >
       <h1>BKHome 主頁</h1>
-      <p>系統基礎架構已啟動，準備進入使用者與 SSO 模組開發。</p>
-
       <div
         style={{
           padding: "1.25rem",
@@ -61,17 +62,64 @@ export default function App() {
         ) : (
           <p>正在連線至後端...</p>
         )}
-        <button
-          onClick={checkHealth}
+        <div
           style={{
-            marginTop: "0.5rem",
-            padding: "0.4rem 0.8rem",
-            cursor: "pointer",
+            display: "flex",
+            justifyContent: "space-between",
           }}
         >
-          重新檢測
-        </button>
+          <button
+            onClick={checkHealth}
+            style={{
+              marginTop: "0.5rem",
+              padding: "0.4rem 0.8rem",
+            }}
+          >
+            重新檢測
+          </button>
+          <a
+            className="a-button"
+            href="login"
+            style={{
+              padding: "0.2rem 0.8rem",
+              cursor: "pointer",
+            }}
+          >
+            登入帳號
+          </a>
+        </div>
       </div>
+    </div>
+  );
+}
+
+export default function App() {
+  return (
+    <div>
+      <a
+        href="/"
+        style={{
+          display: "inline-block",
+          width: "64px",
+          height: "64px",
+        }}
+      >
+        <img
+          src={logoPNG}
+          alt="BKHome Home Page"
+          style={{
+            display: "inline-block",
+            width: "64px",
+            height: "64px",
+          }}
+        ></img>
+      </a>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/login" element={<LoginForm />} />
+        <Route path="/register" element={<RegisterForm />} />
+        <Route path="*" element={<h1>404 Not Found</h1>} />
+      </Routes>
     </div>
   );
 }

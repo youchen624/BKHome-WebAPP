@@ -26,3 +26,5 @@ npm install express cors -w apps/api
 npm install -D @types/express @types/cors -w apps/api
 npm install pg argon2 cookie-parser -w apps/api
 npm install -D @types/pg @types/cookie-parser -w apps/api
+
+npm install react-router -w apps/web
