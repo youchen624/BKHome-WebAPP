@@ -1,6 +1,6 @@
 import { useEffect, useState, type SubmitEvent } from "react";
 import { BrowserRouter, Routes, Route, useSearchParams } from "react-router";
-// import "./RegisterForm.css";
+// import "../../index.css";
 
 export function RegisterForm() {
   const submitHandler = async (e: SubmitEvent<HTMLFormElement>) => {
@@ -16,7 +16,7 @@ export function RegisterForm() {
         fontFamily: "system-ui, sans-serif",
       }}
     >
-      <form onSubmit={submitHandler}>
+      <form className="login-form" onSubmit={submitHandler}>
         <legend style={{
           fontSize: "20px",
           fontWeight: "bold",
@@ -83,14 +83,14 @@ export function RegisterForm() {
           }}
         >
           <a
-            className="a-button func-btn"
+            className="a-button"
             href="login"
           >
             Login
           </a>
           <button
             type="submit"
-            className="func-btn"
+            className="a-button"
           >
             Submit
           </button>

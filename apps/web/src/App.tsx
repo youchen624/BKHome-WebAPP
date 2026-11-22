@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route, useSearchParams } from "react-router";
 import { LoginForm } from "./features/auth/LoginForm";
 import { RegisterForm } from "./features/auth/RegisterForm";
+import { ProfileForm } from "./features/profile/ProfileForm";
 import logoPNG from "./assets/BKHome-128.png";
 
 interface HealthResponse {
@@ -118,6 +119,7 @@ export default function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginForm />} />
         <Route path="/register" element={<RegisterForm />} />
+        <Route path="/profile" element={<ProfileForm />} />
         <Route path="*" element={<h1>404 Not Found</h1>} />
       </Routes>
     </div>

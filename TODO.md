@@ -4,10 +4,12 @@
 
 11/22
 
-1. profile
-2. login api
-3. ws chat
-4. clock
+0. DB Message/ChatRoom
+1. Server <--via CloudFlare Tunnel--> DNS
+2. profile
+3. login api
+4. ws chat
+5. clock
 
 others
 

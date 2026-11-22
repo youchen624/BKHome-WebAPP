@@ -16,7 +16,7 @@ export function LoginForm() {
         fontFamily: "system-ui, sans-serif",
       }}
     >
-      <form onSubmit={submitHandler}>
+      <form className="login-form" onSubmit={submitHandler}>
         <legend style={{
           fontSize: "20px",
           fontWeight: "bold",
@@ -63,14 +63,14 @@ export function LoginForm() {
           }}
         >
           <a
-            className="a-button func-btn"
+            className="a-button"
             href="register"
           >
             Register
           </a>
           <button
             type="submit"
-            className="func-btn"
+            className="a-button"
           >
             Login
           </button>
