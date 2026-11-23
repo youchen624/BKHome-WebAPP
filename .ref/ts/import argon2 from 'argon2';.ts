@@ -14,3 +14,30 @@ export async function hashPassword(plainPassword: string): Promise<string> {
 export async function verifyPassword(hash: string, plainPassword: string): Promise<boolean> {
   return argon2.verify(hash, plainPassword);
 }
+
+/*
+const argon2 = require('argon2');
+
+async function verifyLogin(userInput) {
+  const storedHash = process.env.ADMIN_PASSWORD_HASH?.trim();
+
+  // 1. 檢查登入是否被禁用（未設定、空字串，或設為 '*'）
+  if (!storedHash || storedHash === '*') {
+    return false;
+  }
+
+  // 2. 檢查輸入是否合法
+  if (typeof userInput !== 'string' || userInput.length === 0) {
+    return false;
+  }
+
+  try {
+    // 3. argon2.verify 內部已包含常數時間比對
+    return await argon2.verify(storedHash, userInput);
+  } catch (err) {
+    // 若 .env 裡的雜湊字串格式損毀，verify 會拋出錯誤，這裡安全地回傳 false
+    return false;
+  }
+}
+
+ */

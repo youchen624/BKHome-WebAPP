@@ -66,3 +66,58 @@ ALTER TABLE users
 ADD CONSTRAINT fk_users_invitation
 FOREIGN KEY (invitation_id) REFERENCES invitations(id);
 
+
+
+
+CREATE TABLE IF NOT EXISTS chat_rooms (
+  id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  uuid UUID UNIQUE NOT NULL DEFAULT gen_random_uuid(),
+  type VARCHAR(16) NOT NULL CHECK (type IN ('direct', 'group')),
+  name VARCHAR(128),
+  created_by BIGINT REFERENCES users(id) ON DELETE SET NULL,
+  last_message_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  deleted_at TIMESTAMPTZ
+);
+CREATE TABLE IF NOT EXISTS chat_room_members (
+  room_id BIGINT NOT NULL REFERENCES chat_rooms(id) ON DELETE CASCADE,
+  user_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  role VARCHAR(16) NOT NULL DEFAULT 'member', -- 'owner' | 'admin' | 'member'
+  last_read_message_id BIGINT,
+  joined_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  left_at TIMESTAMPTZ,
+  rejoined_at TIMESTAMPTZ,
+  PRIMARY KEY (room_id, user_id)
+);
+CREATE INDEX IF NOT EXISTS idx_chat_members_user_id ON chat_room_members(user_id);
+
+CREATE TABLE IF NOT EXISTS chat_messages (
+  id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  uuid UUID UNIQUE NOT NULL DEFAULT gen_random_uuid(),
+  room_id BIGINT NOT NULL REFERENCES chat_rooms(id) ON DELETE CASCADE,
+  sender_id BIGINT REFERENCES users(id) ON DELETE SET NULL,
+  reply_to_id BIGINT REFERENCES chat_messages(id) ON DELETE SET NULL,
+
+  msg_type VARCHAR(16) NOT NULL DEFAULT 'text', -- 'text' | 'image' | 'file'
+  content TEXT NOT NULL,                        -- raw
+  metadata JSONB NOT NULL DEFAULT '{}'::jsonb,  -- metadata
+
+  is_silent BOOLEAN NOT NULL DEFAULT FALSE,
+  is_spoiler BOOLEAN NOT NULL DEFAULT FALSE,
+
+  edited_at TIMESTAMPTZ,
+  deleted_at TIMESTAMPTZ,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+CREATE INDEX IF NOT EXISTS idx_chat_messages_room_cursor
+ON chat_messages (room_id, id DESC);
+
+CREATE TABLE IF NOT EXISTS chat_message_edits (
+  id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  message_id BIGINT NOT NULL REFERENCES chat_messages(id) ON DELETE CASCADE,
+  previous_content TEXT NOT NULL,
+  edited_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+CREATE INDEX IF NOT EXISTS idx_chat_message_edits_msg_id ON chat_message_edits(message_id);
+
+-- chat_message_pins ();

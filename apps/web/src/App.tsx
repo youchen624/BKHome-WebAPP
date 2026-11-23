@@ -3,7 +3,8 @@ import { BrowserRouter, Routes, Route, useSearchParams } from "react-router";
 import { LoginForm } from "./features/auth/LoginForm";
 import { RegisterForm } from "./features/auth/RegisterForm";
 import { ProfileForm } from "./features/profile/ProfileForm";
-import logoPNG from "./assets/BKHome-128.png";
+import { Navbar } from "./components/Navbar";
+// import logoPNG from "./assets/BKHome-128.png";
 
 interface HealthResponse {
   status: string;
@@ -71,20 +72,13 @@ function HomePage() {
         >
           <button
             onClick={checkHealth}
-            style={{
-              marginTop: "0.5rem",
-              padding: "0.4rem 0.8rem",
-            }}
+            className="a-button"
           >
             重新檢測
           </button>
           <a
             className="a-button"
             href="login"
-            style={{
-              padding: "0.2rem 0.8rem",
-              cursor: "pointer",
-            }}
           >
             登入帳號
           </a>
@@ -97,7 +91,8 @@ function HomePage() {
 export default function App() {
   return (
     <div>
-      <a
+      <Navbar/>
+      {/* <a
         href="/"
         style={{
           display: "inline-block",
@@ -114,7 +109,7 @@ export default function App() {
             height: "64px",
           }}
         ></img>
-      </a>
+      </a> */}
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginForm />} />

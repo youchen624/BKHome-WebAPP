@@ -2,6 +2,10 @@
 
 ## Summary
 
+11/24
+
+1. Side Menu -- Message Chat
+
 11/22
 
 0. DB Message/ChatRoom
@@ -10,6 +14,7 @@
 3. login api
 4. ws chat
 5. clock
+6. Backup Container: using [REF](https://github.com/prodrigestivill/docker-postgres-backup-local)
 
 others
 

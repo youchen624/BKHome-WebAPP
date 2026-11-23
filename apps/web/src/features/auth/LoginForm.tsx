@@ -5,6 +5,19 @@ import "./LoginForm.css";
 export function LoginForm() {
   const submitHandler = async (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const login_form = new FormData(e?.currentTarget);
+    const login_data = Object.fromEntries(login_form.entries());
+    const res = await fetch("/api/v1/token", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(login_data),
+      credentials: "include",
+    });
+    if (res.ok) {
+      alert("Login Successful");
+    } else {
+      alert("Login Failure");
+    }
   };
   return (
     <div
@@ -17,12 +30,16 @@ export function LoginForm() {
       }}
     >
       <form className="login-form" onSubmit={submitHandler}>
-        <legend style={{
-          fontSize: "20px",
-          fontWeight: "bold",
-          marginBottom: "5px",
-          padding: "0",
-        }}>Login</legend>
+        <legend
+          style={{
+            fontSize: "20px",
+            fontWeight: "bold",
+            marginBottom: "5px",
+            padding: "0",
+          }}
+        >
+          Login
+        </legend>
         <label htmlFor="username">User Name</label>
         <input
           id="username"
@@ -62,16 +79,10 @@ export function LoginForm() {
             // height: "30px",
           }}
         >
-          <a
-            className="a-button"
-            href="register"
-          >
+          <a className="a-button" href="register">
             Register
           </a>
-          <button
-            type="submit"
-            className="a-button"
-          >
+          <button type="submit" className="a-button">
             Login
           </button>
         </div>
