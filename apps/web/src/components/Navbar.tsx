@@ -13,6 +13,17 @@ export function Navbar() {
         {/* logo */}
         <a href="/" className="navbar-logo" onClick={closeMenu}></a>
 
+        <div className="clock-container">
+          <a href="time">
+            <p>2026 11/24</p>
+            <p>12:00</p>
+          </a>
+          <a href="wether">
+            <div>我是</div>
+            <div>天氣</div>
+          </a>
+        </div>
+
         {/* Mobile Burger Button|||*/}
         <button
           className="burger-btn"

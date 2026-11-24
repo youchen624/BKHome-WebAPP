@@ -1,3 +1,7 @@
+# Project Setup & Installation Log (Ongoing)
+# Commands used to initialize the project structure and install dependencies.
+
+
 npm init -y
 
 npm install -D typescript @types/node
@@ -28,3 +32,9 @@ npm install pg argon2 cookie-parser -w apps/api
 npm install -D @types/pg @types/cookie-parser -w apps/api
 
 npm install react-router -w apps/web
+
+
+npm install drizzle-orm -w apps/api
+npm install -D drizzle-kit -w apps/api
+# npx drizzle-kit studio # view
+

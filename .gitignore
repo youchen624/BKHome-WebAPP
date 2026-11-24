@@ -11,6 +11,9 @@ dist/
 # Docker
 bkhome.tar
 
+# DEV
+.database/
+
 # Data
 data/
 

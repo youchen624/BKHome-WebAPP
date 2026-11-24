@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS users (
   password_hash TEXT NOT NULL,
   -- role VARCHAR(20) NOT NULL DEFAULT 'user', -- 'admin' | 'user'
   inviter_id BIGINT REFERENCES users(id),
-  invitation_id BIGINT,
+  invitation_id BIGINT UNIQUE,  -- REFERENCES invitations(id),
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   deleted_at TIMESTAMPTZ,  -- NULL as NONE
@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS invitations (
   token TEXT UNIQUE NOT NULL CHECK (length(token) >= 16),
   owner_id BIGINT NOT NULL REFERENCES users(id) ON DELETE RESTRICT,
 
-  invitee_id BIGINT REFERENCES users(id) ON DELETE RESTRICT,
+  -- invitee_id BIGINT REFERENCES users(id) ON DELETE RESTRICT,
   used_at TIMESTAMPTZ,
   expires_at TIMESTAMPTZ NOT NULL,
   revoked_at TIMESTAMPTZ,
@@ -63,7 +63,7 @@ CREATE INDEX IF NOT EXISTS idx_invitations_owner_id ON invitations(owner_id);
 -- star_invitations
 
 ALTER TABLE users
-ADD CONSTRAINT fk_users_invitation
+ADD CONSTRAINT fk_users_invitation_id
 FOREIGN KEY (invitation_id) REFERENCES invitations(id);
 
 
@@ -73,6 +73,7 @@ CREATE TABLE IF NOT EXISTS chat_rooms (
   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   uuid UUID UNIQUE NOT NULL DEFAULT gen_random_uuid(),
   type VARCHAR(16) NOT NULL CHECK (type IN ('direct', 'group')),
+  direct_key TEXT UNIQUE CHECK (type <> 'direct' OR direct_key IS NOT NULL),
   name VARCHAR(128),
   created_by BIGINT REFERENCES users(id) ON DELETE SET NULL,
   last_message_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
@@ -87,9 +88,15 @@ CREATE TABLE IF NOT EXISTS chat_room_members (
   joined_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   left_at TIMESTAMPTZ,
   rejoined_at TIMESTAMPTZ,
-  PRIMARY KEY (room_id, user_id)
+  -- left_at, rejoined_at EXCLUSIVE
+  PRIMARY KEY (room_id, user_id),
+  CONSTRAINT active_state
+    CHECK(left_at IS NULL OR rejoined_at IS NULL)
 );
-CREATE INDEX IF NOT EXISTS idx_chat_members_user_id ON chat_room_members(user_id);
+CREATE INDEX IF NOT EXISTS idx_chat_members_user_active ON chat_room_members(user_id)
+WHERE left_at IS NULL;
+CREATE INDEX IF NOT EXISTS idx_chat_members_room_active ON chat_room_members(room_id)
+WHERE left_at IS NULL;
 
 CREATE TABLE IF NOT EXISTS chat_messages (
   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -111,6 +118,9 @@ CREATE TABLE IF NOT EXISTS chat_messages (
 );
 CREATE INDEX IF NOT EXISTS idx_chat_messages_room_cursor
 ON chat_messages (room_id, id DESC);
+ALTER TABLE chat_room_members
+ADD CONSTRAINT fk_chat_room_members_last_read_message_id
+FOREIGN KEY (last_read_message_id) REFERENCES chat_messages(id);
 
 CREATE TABLE IF NOT EXISTS chat_message_edits (
   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,

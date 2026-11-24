@@ -38,6 +38,7 @@ RUN npm ci --omit=dev
 COPY --from=builder /app/packages/core/dist ./packages/core/dist
 COPY --from=builder /app/apps/api/dist ./apps/api/dist
 COPY --from=builder /app/apps/web/dist ./apps/web/dist
+COPY --from=builder /app/apps/api/drizzle ./apps/api/drizzle
 
 # Normal User (Un-SUDO)
 USER node

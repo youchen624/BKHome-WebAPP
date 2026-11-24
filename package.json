@@ -8,8 +8,15 @@
     "build": "tsc --build && npm run build -w apps/web",
     "start": "node apps/api/dist/server.js",
     "dev": "concurrently -n API,WEB -c cyan,magenta \"npm run dev:api\" \"npm run dev:web\"",
-    "dev:api": "tsx --env-file=.env watch apps/api/src/server.ts",
-    "dev:web": "npm run dev -w apps/web"
+    "dev:api": "tsx watch --env-file=.env apps/api/src/server.ts",
+    "dev:web": "npm run dev -w apps/web",
+
+    "db:up": "docker compose -f docker-compose.dev.yml up -d",
+    "db:down": "docker compose -f docker-compose.dev.yml down",
+    "db:push": "node --env-file=.env ./node_modules/drizzle-kit/bin.cjs push --config=apps/api/drizzle.config.js",
+    "db:generate": "node --env-file=.env ./node_modules/drizzle-kit/bin.cjs generate --config=apps/api/drizzle.config.js",
+    "db:migrate": "node --env-file=.env ./node_modules/drizzle-kit/bin.cjs migrate --config=apps/api/drizzle.config.js",
+    "db:studio": "node --env-file=.env ./node_modules/drizzle-kit/bin.cjs studio --config=apps/api/drizzle.config.js"
   },
   "repository": {
     "type": "git",

@@ -5,6 +5,7 @@
 11/24
 
 1. Side Menu -- Message Chat
+2. Chat Message Emojis List (Search-able by name)
 
 11/22
 

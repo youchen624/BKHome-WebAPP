@@ -1,0 +1,19 @@
+services:
+  db-dev:
+    image: postgres:16-alpine
+    container_name: bkhome-db-dev
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${DB_USER:-bkhome}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME:-bkhome_db}
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./.database/postgres-dev/:/var/lib/postgresql/data
+      # - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql:ro # ONCE ONLY
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${DB_USER:-bkhome} -d ${DB_NAME:-bkhome_db}" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
