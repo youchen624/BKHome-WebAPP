@@ -1,12 +1,12 @@
 CREATE TABLE "chat_message_edits" (
-	"id" bigint PRIMARY KEY GENERATED ALWAYS AS IDENTITY (sequence name "chat_message_edits_id_seq" INCREMENT BY 1 MINVALUE 1 MAXVALUE 9223372036854776000 START WITH 1 CACHE 1),
+	"id" bigint PRIMARY KEY GENERATED ALWAYS AS IDENTITY (sequence name "chat_message_edits_id_seq" INCREMENT BY 1 MINVALUE 1 MAXVALUE 9223372036854775807 START WITH 1 CACHE 1),
 	"message_id" bigint NOT NULL,
 	"previous_content" text NOT NULL,
 	"edited_at" timestamp with time zone DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE "chat_messages" (
-	"id" bigint PRIMARY KEY GENERATED ALWAYS AS IDENTITY (sequence name "chat_messages_id_seq" INCREMENT BY 1 MINVALUE 1 MAXVALUE 9223372036854776000 START WITH 1 CACHE 1),
+	"id" bigint PRIMARY KEY GENERATED ALWAYS AS IDENTITY (sequence name "chat_messages_id_seq" INCREMENT BY 1 MINVALUE 1 MAXVALUE 9223372036854775807 START WITH 1 CACHE 1),
 	"uuid" uuid DEFAULT gen_random_uuid() NOT NULL,
 	"room_id" bigint NOT NULL,
 	"sender_id" bigint,
@@ -35,7 +35,7 @@ CREATE TABLE "chat_room_members" (
 );
 --> statement-breakpoint
 CREATE TABLE "chat_rooms" (
-	"id" bigint PRIMARY KEY GENERATED ALWAYS AS IDENTITY (sequence name "chat_rooms_id_seq" INCREMENT BY 1 MINVALUE 1 MAXVALUE 9223372036854776000 START WITH 1 CACHE 1),
+	"id" bigint PRIMARY KEY GENERATED ALWAYS AS IDENTITY (sequence name "chat_rooms_id_seq" INCREMENT BY 1 MINVALUE 1 MAXVALUE 9223372036854775807 START WITH 1 CACHE 1),
 	"uuid" uuid DEFAULT gen_random_uuid() NOT NULL,
 	"type" varchar(16) NOT NULL,
 	"direct_key" text,
@@ -51,7 +51,7 @@ CREATE TABLE "chat_rooms" (
 );
 --> statement-breakpoint
 CREATE TABLE "invitations" (
-	"id" bigint PRIMARY KEY GENERATED ALWAYS AS IDENTITY (sequence name "invitations_id_seq" INCREMENT BY 1 MINVALUE 1 MAXVALUE 9223372036854776000 START WITH 1 CACHE 1),
+	"id" bigint PRIMARY KEY GENERATED ALWAYS AS IDENTITY (sequence name "invitations_id_seq" INCREMENT BY 1 MINVALUE 1 MAXVALUE 9223372036854775807 START WITH 1 CACHE 1),
 	"token" text NOT NULL,
 	"owner_id" bigint NOT NULL,
 	"used_at" timestamp with time zone,
@@ -63,7 +63,7 @@ CREATE TABLE "invitations" (
 );
 --> statement-breakpoint
 CREATE TABLE "sessions" (
-	"id" bigint PRIMARY KEY GENERATED ALWAYS AS IDENTITY (sequence name "sessions_id_seq" INCREMENT BY 1 MINVALUE 1 MAXVALUE 9223372036854776000 START WITH 1 CACHE 1),
+	"id" bigint PRIMARY KEY GENERATED ALWAYS AS IDENTITY (sequence name "sessions_id_seq" INCREMENT BY 1 MINVALUE 1 MAXVALUE 9223372036854775807 START WITH 1 CACHE 1),
 	"uuid" uuid DEFAULT gen_random_uuid() NOT NULL,
 	"user_id" bigint NOT NULL,
 	"token_hash" text NOT NULL,
@@ -74,7 +74,7 @@ CREATE TABLE "sessions" (
 );
 --> statement-breakpoint
 CREATE TABLE "users" (
-	"id" bigint PRIMARY KEY GENERATED ALWAYS AS IDENTITY (sequence name "users_id_seq" INCREMENT BY 1 MINVALUE 1 MAXVALUE 9223372036854776000 START WITH 1 CACHE 1),
+	"id" bigint PRIMARY KEY GENERATED ALWAYS AS IDENTITY (sequence name "users_id_seq" INCREMENT BY 1 MINVALUE 1 MAXVALUE 9223372036854775807 START WITH 1 CACHE 1),
 	"uuid" uuid DEFAULT gen_random_uuid() NOT NULL,
 	"email" text NOT NULL,
 	"username" varchar(64) NOT NULL,

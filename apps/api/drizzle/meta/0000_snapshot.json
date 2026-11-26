@@ -1,5 +1,5 @@
 {
-  "id": "f0a20f8e-9d78-466c-81c4-1c927ad79e48",
+  "id": "bfb9f26d-a2c5-4dc5-9707-d0e17251ff17",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -20,7 +20,7 @@
             "increment": "1",
             "startWith": "1",
             "minValue": "1",
-            "maxValue": "9223372036854776000",
+            "maxValue": "9223372036854775807",
             "cache": "1",
             "cycle": false
           }
@@ -100,7 +100,7 @@
             "increment": "1",
             "startWith": "1",
             "minValue": "1",
-            "maxValue": "9223372036854776000",
+            "maxValue": "9223372036854775807",
             "cache": "1",
             "cycle": false
           }
@@ -438,7 +438,7 @@
             "increment": "1",
             "startWith": "1",
             "minValue": "1",
-            "maxValue": "9223372036854776000",
+            "maxValue": "9223372036854775807",
             "cache": "1",
             "cycle": false
           }
@@ -557,7 +557,7 @@
             "increment": "1",
             "startWith": "1",
             "minValue": "1",
-            "maxValue": "9223372036854776000",
+            "maxValue": "9223372036854775807",
             "cache": "1",
             "cycle": false
           }
@@ -668,7 +668,7 @@
             "increment": "1",
             "startWith": "1",
             "minValue": "1",
-            "maxValue": "9223372036854776000",
+            "maxValue": "9223372036854775807",
             "cache": "1",
             "cycle": false
           }
@@ -792,7 +792,7 @@
             "increment": "1",
             "startWith": "1",
             "minValue": "1",
-            "maxValue": "9223372036854776000",
+            "maxValue": "9223372036854775807",
             "cache": "1",
             "cycle": false
           }

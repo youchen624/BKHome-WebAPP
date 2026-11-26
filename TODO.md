@@ -2,6 +2,9 @@
 
 ## Summary
 
+11/26
+/apps/api/src/server.ts:31 data init every time when server up
+
 11/24
 
 1. Side Menu -- Message Chat

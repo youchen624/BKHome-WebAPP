@@ -5,7 +5,8 @@ import { sql } from "drizzle-orm"
 
 export const users = pgTable("users", {
 	// You can use { mode: "bigint" } if numbers are exceeding js number limitations
-	id: bigint({ mode: "number" }).primaryKey().generatedAlwaysAsIdentity({ name: "users_id_seq", startWith: 1, increment: 1, minValue: 1, maxValue: 9223372036854775807, cache: 1 }),
+	id: bigint({ mode: "number" }).primaryKey().generatedAlwaysAsIdentity(),
+	//{ name: "users_id_seq", startWith: 1, increment: 1, minValue: 1, maxValue: 9223372036854775807, cache: 1 }
 	uuid: uuid().defaultRandom().notNull(),
 	email: text().notNull(),
 	username: varchar({ length: 64 }).notNull(),
@@ -42,7 +43,8 @@ export const users = pgTable("users", {
 
 export const sessions = pgTable("sessions", {
 	// You can use { mode: "bigint" } if numbers are exceeding js number limitations
-	id: bigint({ mode: "number" }).primaryKey().generatedAlwaysAsIdentity({ name: "sessions_id_seq", startWith: 1, increment: 1, minValue: 1, maxValue: 9223372036854775807, cache: 1 }),
+	id: bigint({ mode: "number" }).primaryKey().generatedAlwaysAsIdentity(),
+	//{ name: "sessions_id_seq", startWith: 1, increment: 1, minValue: 1, maxValue: 9223372036854775807, cache: 1 }
 	uuid: uuid().defaultRandom().notNull(),
 	// You can use { mode: "bigint" } if numbers are exceeding js number limitations
 	userId: bigint("user_id", { mode: "number" }).notNull(),
@@ -63,7 +65,8 @@ export const sessions = pgTable("sessions", {
 
 export const chatRooms = pgTable("chat_rooms", {
 	// You can use { mode: "bigint" } if numbers are exceeding js number limitations
-	id: bigint({ mode: "number" }).primaryKey().generatedAlwaysAsIdentity({ name: "chat_rooms_id_seq", startWith: 1, increment: 1, minValue: 1, maxValue: 9223372036854775807, cache: 1 }),
+	id: bigint({ mode: "number" }).primaryKey().generatedAlwaysAsIdentity(),
+	//{ name: "chat_rooms_id_seq", startWith: 1, increment: 1, minValue: 1, maxValue: 9223372036854775807, cache: 1 }
 	uuid: uuid().defaultRandom().notNull(),
 	type: varchar({ length: 16 }).notNull(),
 	directKey: text("direct_key"),
@@ -87,7 +90,8 @@ export const chatRooms = pgTable("chat_rooms", {
 
 export const invitations = pgTable("invitations", {
 	// You can use { mode: "bigint" } if numbers are exceeding js number limitations
-	id: bigint({ mode: "number" }).primaryKey().generatedAlwaysAsIdentity({ name: "invitations_id_seq", startWith: 1, increment: 1, minValue: 1, maxValue: 9223372036854775807, cache: 1 }),
+	id: bigint({ mode: "number" }).primaryKey().generatedAlwaysAsIdentity(),
+	//{ name: "invitations_id_seq", startWith: 1, increment: 1, minValue: 1, maxValue: 9223372036854775807, cache: 1 }
 	token: text().notNull(),
 	// You can use { mode: "bigint" } if numbers are exceeding js number limitations
 	ownerId: bigint("owner_id", { mode: "number" }).notNull(),
@@ -108,7 +112,8 @@ export const invitations = pgTable("invitations", {
 
 export const chatMessages = pgTable("chat_messages", {
 	// You can use { mode: "bigint" } if numbers are exceeding js number limitations
-	id: bigint({ mode: "number" }).primaryKey().generatedAlwaysAsIdentity({ name: "chat_messages_id_seq", startWith: 1, increment: 1, minValue: 1, maxValue: 9223372036854775807, cache: 1 }),
+	id: bigint({ mode: "number" }).primaryKey().generatedAlwaysAsIdentity(),
+	//{ name: "chat_messages_id_seq", startWith: 1, increment: 1, minValue: 1, maxValue: 9223372036854775807, cache: 1 }
 	uuid: uuid().defaultRandom().notNull(),
 	// You can use { mode: "bigint" } if numbers are exceeding js number limitations
 	roomId: bigint("room_id", { mode: "number" }).notNull(),
@@ -146,7 +151,8 @@ export const chatMessages = pgTable("chat_messages", {
 
 export const chatMessageEdits = pgTable("chat_message_edits", {
 	// You can use { mode: "bigint" } if numbers are exceeding js number limitations
-	id: bigint({ mode: "number" }).primaryKey().generatedAlwaysAsIdentity({ name: "chat_message_edits_id_seq", startWith: 1, increment: 1, minValue: 1, maxValue: 9223372036854775807, cache: 1 }),
+	id: bigint({ mode: "number" }).primaryKey().generatedAlwaysAsIdentity(),
+	//{ name: "chat_message_edits_id_seq", startWith: 1, increment: 1, minValue: 1, maxValue: 9223372036854775807, cache: 1 }
 	// You can use { mode: "bigint" } if numbers are exceeding js number limitations
 	messageId: bigint("message_id", { mode: "number" }).notNull(),
 	previousContent: text("previous_content").notNull(),
